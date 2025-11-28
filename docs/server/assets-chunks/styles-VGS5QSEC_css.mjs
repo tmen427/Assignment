@@ -1,2 +1,0 @@
-export default `body{background:#f4f6fa;font-family:Inter,sans-serif}
-`;
