@@ -1,0 +1,117 @@
+<div class="orders-table-container">
+
+        <!-- Table Header -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold">All Users</h5>
+         <div class="d-flex gap-2">
+                <button class="btn btn-primary" (click)="Warning()">Add New User</button>
+          </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead class="text-muted">
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Created At</th>
+                   
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                  
+            @if (users$ | async; as items) { 
+              @for (item of items | slice: ((page - 1) * itemsPerPage) : (page * itemsPerPage); track item.username)  { 
+                            <tr>
+                     <td>
+                         <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="loadModal(item)">
+                                                        {{item.id}}   </div>
+                     </td> 
+                     <td> 
+                         <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="loadModal(item)">
+                                                        {{item.firstName}}</div>
+                     </td>
+                     <td> 
+                            <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="loadModal(item)">
+                                                        {{item.lastName}}</div>
+                     </td>
+                     <td> 
+                            <div data-bs-toggle="modal" data-bs-target="#exampleModal"  (click)="loadModal(item)">
+                                                        {{item.createdAt | date: 'medium'}}
+
+                                                         @if(isCurrentMonthAndYear(item.createdAt)) {
+                                                             <span class="badge bg-success ms-1" >
+                                                                  <i class="fa fa-user-plus"></i> New User
+                                                              </span>
+                                                            } 
+                         </div>
+                        </td>
+                        </tr>
+                    }
+                  }
+               </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <button class="btn btn-outline-secondary btn-sm"(click)="page = page - 1" [disabled]="page === 1">Previous</button>
+            <span class="text-muted small">Page {{page}} </span>
+            <button class="btn btn-outline-secondary btn-sm" (click)="page = page + 1" [disabled]="page >= maximumPagination / itemsPerPage">Next</button>
+        </div>
+
+    </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Account Information</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+
+<!-- Form inside Modal -->
+<div class="modal-body">
+    <form [formGroup]="UserInformationForm" (ngSubmit)="onSubmit()" >
+        <div class="mb-3">
+        <label for="firstName" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="firstName" formControlName="firstName">
+       
+ 
+        </div>
+        <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="lastName" formControlName="lastName">
+   
+        </div>
+        <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" formControlName="username">
+      
+        </div>
+         <div class="mb-3">
+         <label for="password" class="form-label">New Password</label>
+         <input type="text" class="form-control" id="password" formControlName="password"> 
+         <div id="passworddHelp" class="form-text">We'll never share your password with anyone else.</div> 
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (ngSubmit)="onSubmit()" >Submit</button>
+      </div>
+    </form>
+</div>
+
+
+    </div>
+  </div>
+
+
+

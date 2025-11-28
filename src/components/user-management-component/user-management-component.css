@@ -1,0 +1,22 @@
+    .order-card {
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid #e2e2e2;
+    }
+
+    .order-summary-item {
+        border-right: 1px solid #eee;
+    }
+    .order-summary-item:last-child {
+        border-right: none;
+    }
+
+    /* Table */
+    .orders-table-container {
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid #e2e2e2;
+        margin-top: 20px;
+    }
