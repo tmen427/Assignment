@@ -1,6 +1,6 @@
 
 export default {
-  basePath: '/',
+  basePath: '/Assignment',
   supportedLocales: {
   "en-US": ""
 },
