@@ -29,8 +29,8 @@ export class UserManagementComponent {
 
   UserInformationForm = new FormGroup({
     id: new FormControl(0, { nonNullable: true }),
-    createdAt: new FormControl<Date>(new Date(), { nonNullable: true }),
-    lastOnline: new FormControl<Date>(new Date(), { nonNullable: true }),
+    createdAt: new FormControl(new Date(), { nonNullable: true }),
+    lastOnline: new FormControl(new Date(), { nonNullable: true }),
     firstName: new FormControl('', { nonNullable: true }),
     lastName: new FormControl('', { nonNullable: true }),
     username: new FormControl('', { nonNullable: true }),
@@ -53,9 +53,6 @@ export class UserManagementComponent {
 
   onSubmit() {
     const { id } = this.UserInformationForm.value;
-
-    const values = this.UserInformationForm.value;
-    console.log(values);
 
     this.userService
       .updateUser(id!, this.UserInformationForm.value)
@@ -80,17 +77,15 @@ export class UserManagementComponent {
   }
 
   loadModal(userinfo: UserInformation) {
-    this.UserInformationForm.reset();
+    this.UserInformationForm.patchValue({
+      id: userinfo.id,
+      createdAt: userinfo.createdAt,
+      lastOnline: userinfo.lastOnline,
+      firstName: userinfo.firstName,
+      lastName: userinfo.lastName,
+      username: userinfo.username,
+      password: userinfo.password,
+    });
     console.log(this.UserInformationForm.value);
-
-    // this.UserInformationForm.patchValue({
-    //   id: userinfo.id,
-    //   createdAt: userinfo.createdAt,
-    //   lastOnline: userinfo.lastOnline,
-    //   firstName: userinfo.firstName,
-    //   lastName: userinfo.lastName,
-    //   username: userinfo.username,
-    //   password: userinfo.password,
-    // });
   }
 }
