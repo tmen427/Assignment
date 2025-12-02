@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './side-bar-component.html',
   styleUrl: './side-bar-component.css',
 })
-export class SideBarComponent {
-
-}
+export class SideBarComponent {}

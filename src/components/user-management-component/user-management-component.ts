@@ -3,11 +3,10 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserInformation } from '../../app/models/User';
 import { UserService } from '../../app/services/user-service';
-import { Observable, mergeMap} from 'rxjs';
+import { Observable, mergeMap, switchMap } from 'rxjs';
 import { inject } from '@angular/core';
-import { AsyncPipe, DatePipe, SlicePipe} from '@angular/common';
+import { AsyncPipe, DatePipe, SlicePipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-
 
 @Component({
   selector: 'app-user-management-component',
@@ -17,21 +16,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class UserManagementComponent {
   userService = inject(UserService);
-  destroyRef = inject(DestroyRef)
-
-
+  destroyRef = inject(DestroyRef);
 
   Users!: UserInformation;
   users$: Observable<any[]> = this.userService.users$;
 
-
-  page: number = 1; 
-  itemsPerPage: number = 10; 
-  maximumPagination: number = 0; 
-
+  page: number = 1;
+  itemsPerPage: number = 10;
+  maximumPagination: number = 0;
 
   constructor(private fb: FormBuilder) {}
-
 
   UserInformationForm = new FormGroup<UserInformationForForm>({
     id: new FormControl<number>(0, { nonNullable: true }),
@@ -43,25 +37,34 @@ export class UserManagementComponent {
     password: new FormControl<string>('', { nonNullable: true }),
   });
 
-
   ngOnInit(): void {
-    this.userService.getUsers().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
-      next: (value) => { this.maximumPagination = value.length}, 
-      error: (error) => {console.log(error)}
-       }); 
-    }
-  
+    this.userService
+      .getUsers()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (value) => {
+          this.maximumPagination = value.length;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+  }
 
   onSubmit() {
-      this.userService.updateUser(this.UserInformationForm.value.id!, this.UserInformationForm.value).
-      //re-update the async pipe, so that the data is refreshed in the table without refreshing the page
-           pipe(mergeMap(() => this.userService.getUsers()))
-           .subscribe({
-            next: (_)=>  {}, 
-            error: (error)=> {console.log(error)}
-          });
-        }
+    const { id } = this.UserInformationForm.value;
 
+    this.userService
+      .updateUser(id!, this.UserInformationForm.value)
+      //re-update the async pipe, so that the data is refreshed in the table without refreshing the page
+      .pipe(switchMap(() => this.userService.getUsers()))
+      .subscribe({
+        next: (_) => {},
+        error: (error) => {
+          console.error(error);
+        },
+      });
+  }
 
   isCurrentMonthAndYear(value: Date): boolean {
     const date = new Date(value);
@@ -70,9 +73,8 @@ export class UserManagementComponent {
   }
 
   Warning() {
-    alert("Nothing Yet!")
+    alert('Nothing Yet!');
   }
-
 
   loadModal(userinfo: UserInformation) {
     this.UserInformationForm.patchValue({
@@ -87,17 +89,12 @@ export class UserManagementComponent {
   }
 }
 
-
-
 interface UserInformationForForm {
-  id : FormControl<number>,
-  createdAt: FormControl<Date>,
-  lastOnline: FormControl<Date>,
-  firstName: FormControl<string>,
-  lastName: FormControl<string>,
-  username: FormControl<string>,
+  id: FormControl<number>;
+  createdAt: FormControl<Date>;
+  lastOnline: FormControl<Date>;
+  firstName: FormControl<string>;
+  lastName: FormControl<string>;
+  username: FormControl<string>;
   password: FormControl<string>;
 }
-
-
-

@@ -7,7 +7,7 @@ import { NavBarComponent } from '../layout/nav-bar-component/nav-bar-component';
   selector: 'app-root',
   imports: [RouterOutlet, SideBarComponent, NavBarComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('assignment-app');

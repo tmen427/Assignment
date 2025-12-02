@@ -1,45 +1,50 @@
-
 .sidebar {
-    width: 240px;
-    height: 100vh;
-    background: #fff;
-    border-right: 1px solid #e5e5e5;
-    padding: 20px 0;
-    position: fixed;
+  width: 240px;
+  height: 100vh;
+  background: #fff;
+  border-right: 1px solid #e5e5e5;
+  padding: 20px 0;
+  position: fixed;
 }
 .sidebar .nav-link {
-    color: #5a5a5a;
-    padding: 12px 25px;
-    font-size: 15px;
- 
+  color: #5a5a5a;
+  padding: 12px 25px;
+  font-size: 15px;
 }
 .sidebar .nav-link.active,
 .sidebar .nav-link:hover {
-    background: #e9f3ff;
-    color: #006adc;
+  background: #e9f3ff;
+  color: #006adc;
 }
 .content {
-    margin-left: 260px;
-    padding: 25px;
+  margin-left: 260px;
+  padding: 25px;
 }
 .card-custom {
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 .stock-img {
-    width: 45px;
-    height: 45px;
-    border-radius: 5px;
-    object-fit: cover;
+  width: 45px;
+  height: 45px;
+  border-radius: 5px;
+  object-fit: cover;
 }
 
-   @media (max-width: 768px) {
-        .sidebar { display: none; }
-        .main { margin-left: 0; padding: 15px; }
-        .mobile-nav { display: flex; }
-    }
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+  .main {
+    margin-left: 0;
+    padding: 15px;
+  }
+  .mobile-nav {
+    display: flex;
+  }
+}
 
 .navbar {
-        margin-top: 80px;
-    }
+  margin-top: 80px;
+}
