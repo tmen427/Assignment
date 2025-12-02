@@ -25,16 +25,16 @@ export class UserManagementComponent {
   itemsPerPage: number = 10;
   maximumPagination: number = 0;
 
-  constructor(private fb: FormBuilder) {}
+  constructor() {}
 
-  UserInformationForm = new FormGroup<UserInformationForForm>({
-    id: new FormControl<number>(0, { nonNullable: true }),
+  UserInformationForm = new FormGroup({
+    id: new FormControl(0, { nonNullable: true }),
     createdAt: new FormControl<Date>(new Date(), { nonNullable: true }),
     lastOnline: new FormControl<Date>(new Date(), { nonNullable: true }),
-    firstName: new FormControl<string>('', { nonNullable: true }),
-    lastName: new FormControl<string>('', { nonNullable: true }),
-    username: new FormControl<string>('', { nonNullable: true }),
-    password: new FormControl<string>('', { nonNullable: true }),
+    firstName: new FormControl('', { nonNullable: true }),
+    lastName: new FormControl('', { nonNullable: true }),
+    username: new FormControl('', { nonNullable: true }),
+    password: new FormControl('', { nonNullable: true }),
   });
 
   ngOnInit(): void {
@@ -53,6 +53,9 @@ export class UserManagementComponent {
 
   onSubmit() {
     const { id } = this.UserInformationForm.value;
+
+    const values = this.UserInformationForm.value;
+    console.log(values);
 
     this.userService
       .updateUser(id!, this.UserInformationForm.value)
@@ -77,24 +80,17 @@ export class UserManagementComponent {
   }
 
   loadModal(userinfo: UserInformation) {
-    this.UserInformationForm.patchValue({
-      id: userinfo.id,
-      createdAt: userinfo.createdAt,
-      lastOnline: userinfo.lastOnline,
-      firstName: userinfo.firstName,
-      lastName: userinfo.lastName,
-      username: userinfo.username,
-      password: userinfo.password,
-    });
-  }
-}
+    this.UserInformationForm.reset();
+    console.log(this.UserInformationForm.value);
 
-interface UserInformationForForm {
-  id: FormControl<number>;
-  createdAt: FormControl<Date>;
-  lastOnline: FormControl<Date>;
-  firstName: FormControl<string>;
-  lastName: FormControl<string>;
-  username: FormControl<string>;
-  password: FormControl<string>;
+    // this.UserInformationForm.patchValue({
+    //   id: userinfo.id,
+    //   createdAt: userinfo.createdAt,
+    //   lastOnline: userinfo.lastOnline,
+    //   firstName: userinfo.firstName,
+    //   lastName: userinfo.lastName,
+    //   username: userinfo.username,
+    //   password: userinfo.password,
+    // });
+  }
 }
