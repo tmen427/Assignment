@@ -52,10 +52,8 @@ export class UserManagementComponent {
   }
 
   onSubmit() {
-    const { id } = this.UserInformationForm.value;
-
     this.userService
-      .updateUser(id!, this.UserInformationForm.value)
+      .updateUser(this.UserInformationForm.value)
       //re-update the async pipe, so that the data is refreshed in the table without refreshing the page
       .pipe(switchMap(() => this.userService.getUsers()))
       .subscribe({
@@ -86,6 +84,5 @@ export class UserManagementComponent {
       username: userinfo.username,
       password: userinfo.password,
     });
-    console.log(this.UserInformationForm.value);
   }
 }

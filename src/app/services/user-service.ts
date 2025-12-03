@@ -26,7 +26,8 @@ export class UserService {
       })
     );
   }
-  updateUser(id: number, updatedData: any): Observable<any> {
+  updateUser(updatedData: any): Observable<any> {
+    const { id } = updatedData;
     let url = `${this.apiUrl}/${id}`;
     const httpOptions = {
       headers: new HttpHeaders({
