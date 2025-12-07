@@ -22,24 +22,24 @@
       <tbody>
         @if (users$ | async; as items) { @for (item of items | slice: ((page - 1) * itemsPerPage) :
         (page * itemsPerPage); track item.username) {
-        <tr>
+        <tr (click)="loadModal(item)">
           <td>
-            <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="loadModal(item)">
+            <div data-bs-toggle="modal" data-bs-target="#exampleModal">
               {{ item.id }}
             </div>
           </td>
           <td>
-            <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="loadModal(item)">
+            <div data-bs-toggle="modal" data-bs-target="#exampleModal">
               {{ item.firstName }}
             </div>
           </td>
           <td>
-            <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="loadModal(item)">
+            <div data-bs-toggle="modal" data-bs-target="#exampleModal">
               {{ item.lastName }}
             </div>
           </td>
           <td>
-            <div data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="loadModal(item)">
+            <div data-bs-toggle="modal" data-bs-target="#exampleModal">
               <!-- {{ item.createdAt | date : 'medium' }} -->
               {{ item.createdAt | date : 'longDate' }} @ {{ item.createdAt | date : 'shortTime' }}
 
